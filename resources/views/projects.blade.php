@@ -5,48 +5,35 @@
 @section('content')
     <!-- PROJECTS -->
     <section id="projects" class="page max-w-4xl mx-auto px-6 py-24">
-      <h2 class="text-3xl font-bold text-stone-900 mb-8">Proyek</h2>
+      <div class="flex justify-between">
+        <div>
+          <h2 class="text-3xl font-bold text-stone-900 mb-8">Proyek</h2>
+        </div>
+        <div>
+          <a href="{{ route('projects.create') }}" class="nav-link-btn bg-stone-900 text-white px-5 py-2.5 rounded-md text-sm font-medium hover:bg-stone-700 transition-colors">Tambah Proyek</a>
+        </div>
+      </div>
       <div class="grid sm:grid-cols-2 gap-6">
- 
+
+        @if($projects->isEmpty())
+          <p class="text-stone-500">Belum ada proyek.</p>
+        @else
+        @foreach ($projects as $project)
         <div class="border border-stone-200 rounded-lg p-5 bg-white">
-          <h3 class="font-semibold text-stone-900 mb-1">Website Toko Online</h3>
-          <p class="text-sm text-stone-600 mb-3">Aplikasi e-commerce sederhana dengan fitur keranjang belanja dan katalog produk.</p>
+          <h3 class="font-semibold text-stone-900 mb-1">{{ $project->title }}</h3>
+          <p class="text-sm text-stone-600 mb-3">{{ $project->description }}</p>
           <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">HTML</span>
-            <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">Tailwind</span>
-            <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">JavaScript</span>
+            @foreach (explode(',', $project->tech) as $tech)
+              <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">{{ $tech }}</span>
+            @endforeach
           </div>
         </div>
- 
-        <div class="border border-stone-200 rounded-lg p-5 bg-white">
-          <h3 class="font-semibold text-stone-900 mb-1">Aplikasi To-Do List</h3>
-          <p class="text-sm text-stone-600 mb-3">Aplikasi pencatat tugas harian dengan fitur tambah, edit, dan hapus tugas.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">JavaScript</span>
-            <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">CSS</span>
-          </div>
-        </div>
- 
-        <div class="border border-stone-200 rounded-lg p-5 bg-white">
-          <h3 class="font-semibold text-stone-900 mb-1">Portfolio Pribadi</h3>
-          <p class="text-sm text-stone-600 mb-3">Website portofolio ini sendiri, dibangun menggunakan Tailwind CSS.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">HTML</span>
-            <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">Tailwind</span>
-          </div>
-        </div>
- 
-        <div class="border border-stone-200 rounded-lg p-5 bg-white">
-          <h3 class="font-semibold text-stone-900 mb-1">Sistem Absensi Sederhana</h3>
-          <p class="text-sm text-stone-600 mb-3">Proyek kampus untuk mencatat kehadiran mahasiswa berbasis web.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">PHP</span>
-            <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">MySQL</span>
-          </div>
-        </div>
- 
+        @endforeach
+        @endif
       </div>
     </section>
+
+
 @endsection
 
 @section('scripts')

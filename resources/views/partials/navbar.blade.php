@@ -5,7 +5,7 @@
         <a href="{{ route('home') }}" class="nav-link pb-1 hover:text-stone-900 transition-colors {{ Route::is('home') ? 'active' : '' }}">Home</a>
         <a href="{{ route('about') }}" class="nav-link pb-1 hover:text-stone-900 transition-colors {{ Route::is('about') ? 'active' : '' }}">About</a>
         <a href="{{ route('education') }}" class="nav-link pb-1 hover:text-stone-900 transition-colors {{ Route::is('education') ? 'active' : '' }}">Education</a>
-        <a href="{{ route('projects') }}" class="nav-link pb-1 hover:text-stone-900 transition-colors {{ Route::is('projects') ? 'active' : '' }}">Projects</a>
+        <a href="{{ route('projects.index') }}" class="nav-link pb-1 hover:text-stone-900 transition-colors {{ Route::is('projects') ? 'active' : '' }}">Projects</a>
       </nav>
     </div>
   </header>
