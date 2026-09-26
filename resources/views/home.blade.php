@@ -10,7 +10,7 @@
         Mahasiswa Informatika yang senang membangun aplikasi web dan belajar hal baru di dunia teknologi.
       </p>
       <div class="flex gap-4">
-        <a href="{{ route('projects') }}" class="nav-link-btn bg-stone-900 text-white px-5 py-2.5 rounded-md text-sm font-medium hover:bg-stone-700 transition-colors">
+        <a href="{{ route('projects.index') }}" class="nav-link-btn bg-stone-900 text-white px-5 py-2.5 rounded-md text-sm font-medium hover:bg-stone-700 transition-colors">
           Lihat Proyek
         </a>
         <a href="{{ route('about') }}" class="nav-link-btn border border-stone-300 px-5 py-2.5 rounded-md text-sm font-medium hover:bg-stone-100 transition-colors">

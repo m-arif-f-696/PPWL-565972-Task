@@ -16,6 +16,7 @@
 </head>
 
 <body class="bg-stone-50 text-stone-800 font-sans min-h-screen flex flex-col">
+    {{-- @include('partials.confirm') --}}
     @include('partials.navbar')
 
     <main>

@@ -32,8 +32,8 @@ class ProjectController extends Controller
     {
         //
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+            'title' => 'required|min:5',
+            'description' => 'required|min:10',
             'tech' => 'required',
             'link' => 'nullable',
         ]);
@@ -58,6 +58,9 @@ class ProjectController extends Controller
     public function edit(string $id)
     {
         //
+
+        $project = Project::findOrFail($id);
+        return view('form', compact('project'));
     }
 
     /**
@@ -66,6 +69,18 @@ class ProjectController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $validateRequest = $request->validate([
+            'title' => 'required|min:5',
+            'description' => 'required|min:10',
+            'tech' => 'required',
+            'link' => 'nullable',
+        ]);
+
+        $project = Project::findOrFail($id);
+        $project->update($validateRequest);
+
+        return redirect()->route('projects.index')
+            ->with('success', 'Project updated successfully.');
     }
 
     /**
@@ -74,5 +89,11 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         //
+
+        $project = Project::findOrFail($id);
+        $project->delete();
+
+        return redirect()->route('projects.index')
+            ->with('success', 'Project deleted successfully.');
     }
 }
