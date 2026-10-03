@@ -12,8 +12,8 @@
         </svg>
       </div>
       <div>
-        <h3 class="font-semibold text-stone-900">Hapus proyek?</h3>
-        <p class="text-sm text-stone-500 mt-1">Tindakan ini tidak bisa dibatalkan. Proyek akan dihapus secara permanen.</p>
+        <h3 class="font-semibold text-stone-900" id="modal-title">Hapus proyek?</h3>
+        <p class="text-sm text-stone-500 mt-1" id="modal-message">Tindakan ini tidak bisa dibatalkan. Proyek akan dihapus secara permanen.</p>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
         id="confirm-delete"
         class="text-sm text-white bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
       >
-        Ya, Hapus
+        Ya
       </button>
     </div>
   </div>

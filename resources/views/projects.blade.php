@@ -21,7 +21,7 @@
           <h2 class="text-3xl font-bold text-stone-900 mb-8">Proyek</h2>
         </div>
         <div>
-          <a href="{{ route('projects.create') }}" class="nav-link-btn bg-stone-900 text-white px-5 py-2.5 rounded-md text-sm font-medium hover:bg-stone-700 transition-colors">Tambah Proyek</a>
+          <a href="{{ route('projects.dashboard') }}" class="nav-link-btn border border-stone-300 text-stone-600 px-5 py-2.5 rounded-md text-sm font-medium hover:bg-stone-100 transition-colors">Dashboard</a>
         </div>
       </div>
       <div class="grid sm:grid-cols-2 gap-6">
@@ -37,27 +37,6 @@
             @foreach (explode(',', $project->tech) as $tech)
               <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">{{ trim($tech) }}</span>
             @endforeach
-          </div>
-
-          <div class="flex gap-2 pt-3 border-t border-stone-100">
-            
-            <a  href="{{ route('projects.edit', $project->id) }}"
-              class="text-sm text-stone-600 border border-stone-300 px-3 py-1.5 rounded-md hover:bg-stone-100 transition-colors"
-            >
-              Edit
-            </a>
-
-            <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
-                  data-confirm-modal>
-              @csrf
-              @method('DELETE')
-              <button
-                type="submit"
-                class="text-sm text-red-600 border border-red-200 px-3 py-1.5 rounded-md hover:bg-red-50 transition-colors"
-              >
-                Delete
-              </button>
-            </form>
           </div>
         </div>
         @endforeach
@@ -77,48 +56,6 @@
             successAlert.style.display = 'none';
         }, 5000);
     }
-
-    // modal delete
-    const modal = document.getElementById('confirm-modal');
-    const modalOverlay = document.getElementById('confirm-overlay');
-    const closeBtn = document.getElementById('confirm-cancel');
-    const deleteBtn = document.getElementById('confirm-delete');
-    let formData = null;
-
-    function openModal(formDataValue){
-        if(!modal) return;
-        formData = formDataValue;
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        
-    }
-
-    function closeModal(){
-        if(!modal) return;
-        formData = null;
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
-
-    document.querySelectorAll('[data-confirm-modal]').forEach(form => {
-        // console.log(form);  
-      form.addEventListener('submit', (e) => {
-          // console.log(form);
-            e.preventDefault();
-            openModal(form);
-        });
-    });
-
-    closeBtn.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', closeModal);
-
-    deleteBtn.addEventListener('click', () => {
-        if(formData){
-            formData.submit();
-        }else{
-            closeModal();
-        }
-    });
 </script>
 
 @endpush

@@ -76,7 +76,7 @@
       >
         Simpan Proyek
       </button>
-      <a href="{{ route('projects.index') }}"
+      <a href="{{ route('projects.dashboard') }}"
         class="nav-link-btn border border-stone-300 px-5 py-2.5 rounded-md text-sm font-medium hover:bg-stone-100 transition-colors"
       >
         Batal

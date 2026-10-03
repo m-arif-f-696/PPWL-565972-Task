@@ -12,7 +12,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::published()->get();
         return view('projects', compact('projects'));
     }
 
@@ -40,7 +40,7 @@ class ProjectController extends Controller
 
         Project::create($request->all());
 
-        return redirect()->route('projects.index')
+        return redirect()->route('projects.dashboard')
             ->with('success', 'Project created successfully.');
     }
 
@@ -79,7 +79,7 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $project->update($validateRequest);
 
-        return redirect()->route('projects.index')
+        return redirect()->route('projects.dashboard')
             ->with('success', 'Project updated successfully.');
     }
 
@@ -93,7 +93,46 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $project->delete();
 
-        return redirect()->route('projects.index')
+        return redirect()->route('projects.dashboard')
             ->with('success', 'Project deleted successfully.');
     }
+
+    public function dashboard(){
+        $published = Project::published()->get();
+        $drafts = Project::draft()->get();
+        $trashed = Project::trash()->get();
+        return view('dashboard', compact('published', 'drafts', 'trashed'));
+    }
+
+    public function restore($id){
+        $project = Project::onlyTrashed()->where('id', $id)->first();
+        $project->restore();
+        return redirect()->route('projects.dashboard')
+            ->with('success', 'Project restored successfully.');
+    }
+
+    public function forceDelete($id){
+        $project = Project::onlyTrashed()->where('id', $id)->first();
+        $project->forceDelete();
+        return redirect()->route('projects.dashboard')
+            ->with('success', 'Project deleted successfully.');
+    }
+
+    public function publish($id){
+        $project = Project::draft()->where('id', $id)->first();
+        $project->status = 'published';
+        $project->save();
+        return redirect()->route('projects.index')
+            ->with('success', 'Project published successfully.');
+    }
+
+    public function unpublish($id){
+        $project = Project::published()->where('id', $id)->first();
+        $project->status = 'draft';
+        $project->save();
+        return redirect()->route('projects.dashboard')
+            ->with('success', 'Project unpublished successfully.');
+    }
+
+    
 }
