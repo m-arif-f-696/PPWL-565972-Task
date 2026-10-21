@@ -10,10 +10,12 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::published()->get();
-        return view('projects', compact('projects'));
+        $options = [5, 10, 15, 20, 25];
+        $perPage = in_array((int) $request->per_page, $options) ? (int) $request->per_page : 5;
+        $projects = Project::published()->paginate($perPage, ['*'], 'page')->withQueryString();
+        return view('projects', compact('projects', 'perPage', 'options'));
     }
 
     /**
@@ -97,11 +99,13 @@ class ProjectController extends Controller
             ->with('success', 'Project deleted successfully.');
     }
 
-    public function dashboard(){
-        $published = Project::published()->get();
-        $drafts = Project::draft()->get();
-        $trashed = Project::trash()->get();
-        return view('dashboard', compact('published', 'drafts', 'trashed'));
+    public function dashboard(Request $request){
+        $options = [4, 8, 12, 16, 20];
+        $perPage = in_array((int) $request->per_page, $options) ? (int) $request->per_page : 4;
+        $published = Project::published()->paginate($perPage, ['*'], 'published_page')->withQueryString();
+        $drafts    = Project::draft()->paginate($perPage, ['*'], 'draft_page')->withQueryString();
+        $trashed   = Project::trash()->paginate($perPage, ['*'], 'trashed_page')->withQueryString();
+        return view('dashboard', compact('published', 'drafts', 'trashed', 'perPage', 'options'));
     }
 
     public function restore($id){

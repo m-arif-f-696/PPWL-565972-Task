@@ -24,13 +24,15 @@
           </a>
         </div>
       </div>
+      @include('partials.page', ['options' => $options, 'perPage' => $perPage])
 
       {{-- Published --}}
       <div class="mb-12">
-        <h3 class="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-4">Sudah Dipublish</h3>
+        <h3 class="text-md font-semibold uppercase tracking-wide mb-4">Sudah Dipublish</h3>
         @if($published->isEmpty())
           <p class="text-stone-400 text-sm">Tidak ada proyek yang dipublish.</p>
         @else
+          {{-- Container Grid untuk daftar proyek --}}
           <div class="grid sm:grid-cols-2 gap-6">
             @foreach ($published as $project)
               <div class="border border-stone-200 rounded-lg p-5 bg-white">
@@ -48,21 +50,26 @@
                   <form action="{{ route('projects.unpublish', $project->id) }}" method="POST" data-confirm-modal data-confirm-title="Unpublish Proyek" data-confirm-message="Apakah anda yakin ingin mengunpublish proyek {{ $project->title }}?">
                     @csrf
                     @method('PATCH')
-                    <button type="submit"
-                            class="text-sm text-amber-600 border border-amber-200 px-3 py-1.5 rounded-md hover:bg-amber-50 transition-colors">
+                    <button type="submit" class="text-sm text-amber-600 border border-amber-200 px-3 py-1.5 rounded-md hover:bg-amber-50 transition-colors">
                       Unpublish
                     </button>
                   </form>
                 </div>
               </div>
             @endforeach
+          </div> {{-- End Grid --}}
+
+          {{-- Pagination ditaruh di luar Grid --}}
+          
+          <div class="mt-6">
+            {{ $published->onEachSide(1)->withQueryString()->links('pagination::tailwind') }}
           </div>
         @endif
       </div>
 
       <!-- DRAFT (belum dipublish) -->
       <div class="mb-12">
-        <h3 class="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-4">Belum Dipublish</h3>
+        <h3 class="text-md font-semibold uppercase tracking-wide mb-4">Belum Dipublish</h3>
 
         @if($drafts->isEmpty())
           <p class="text-stone-400 text-sm">Tidak ada draft.</p>
@@ -105,12 +112,16 @@
               </div>
             @endforeach
           </div>
+
+          <div class="mt-6">
+            {{ $drafts->onEachSide(1)->withQueryString()->links('pagination::tailwind') }}
+          </div>
         @endif
       </div>
 
       <!-- SUDAH DIHAPUS (soft deleted) -->
       <div>
-        <h3 class="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-4">Sudah Dihapus</h3>
+        <h3 class="text-md font-semibold uppercase tracking-wide mb-4">Sudah Dihapus</h3>
 
         @if($trashed->isEmpty())
           <p class="text-stone-400 text-sm">Tidak ada proyek yang dihapus.</p>
@@ -151,6 +162,9 @@
                 </div>
               </div>
             @endforeach
+          </div>
+          <div class="mt-6">
+            {{ $trashed->onEachSide(1)->withQueryString()->links('pagination::tailwind') }}
           </div>
         @endif
       </div>

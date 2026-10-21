@@ -24,11 +24,11 @@
           <a href="{{ route('projects.dashboard') }}" class="nav-link-btn border border-stone-300 text-stone-600 px-5 py-2.5 rounded-md text-sm font-medium hover:bg-stone-100 transition-colors">Dashboard</a>
         </div>
       </div>
+      
+      @if($projects->isEmpty())
+      <p class="text-stone-500">Belum ada proyek.</p>
+      @else
       <div class="grid sm:grid-cols-2 gap-6">
-
-        @if($projects->isEmpty())
-          <p class="text-stone-500">Belum ada proyek.</p>
-        @else
         @foreach ($projects as $project)
         <div class="border border-stone-200 rounded-lg p-5 bg-white">
           <h3 class="font-semibold text-stone-900 mb-1">{{ $project->title }}</h3>
@@ -40,8 +40,14 @@
           </div>
         </div>
         @endforeach
-        @endif
+
       </div>
+      <!-- Pagination -->
+      <div class='flex justify-between mt-8'>
+        @include('partials.page', ['options' => $options, 'perPage' => $perPage])
+        {{ $projects->onEachSide(0)->withQueryString()->links('pagination::tailwind') }}
+      </div>
+        @endif
     </section>
 
 
