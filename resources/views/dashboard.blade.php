@@ -32,7 +32,6 @@
         @if($published->isEmpty())
           <p class="text-stone-400 text-sm">Tidak ada proyek yang dipublish.</p>
         @else
-          {{-- Container Grid untuk daftar proyek --}}
           <div class="grid sm:grid-cols-2 gap-6">
             @foreach ($published as $project)
               <div class="border border-stone-200 rounded-lg p-5 bg-white">
@@ -57,9 +56,7 @@
                 </div>
               </div>
             @endforeach
-          </div> {{-- End Grid --}}
-
-          {{-- Pagination ditaruh di luar Grid --}}
+          </div> 
           
           <div class="mt-6">
             {{ $published->onEachSide(1)->withQueryString()->links('pagination::tailwind') }}
